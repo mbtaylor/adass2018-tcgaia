@@ -90,8 +90,9 @@
 }
 
 \newcommand{\txtAbstract}{
-\begin{tcolorbox}[fonttitle=\sffamily\Large,
-                  title=Abstract]
+\begin{tcolorbox}[fonttitle=\sffamily\LARGE,
+                  title=\mbox{\rule[-0.5ex]{0ex}{2.5ex}
+                              Abstract}]
 TOPCAT, and its command line counterpart STILTS, are powerful tools
 for working with large source catalogues.  ESA's {\em Gaia\/} mission,
 most recently with its second data release, is producing source catalogues
@@ -103,19 +104,35 @@ Gaia data.
 
 \newcommand{\txtAcknowledgements}{
 \begin{tcolorbox}[fonttitle=\sffamily\LARGE,
-                  title=Acknowledgements]
+                  title=\mbox{\rule[-0.5ex]{0ex}{2.5ex}
+                              Acknowledgements}]
 \raggedright
 This work has been primarily funded by the
 UK's Science and Technology Facilities Council.
 It has made use of data from the European Space Agency (ESA) mission
 \textsl{Gaia} (\url{https://www.cosmos.esa.int/gaia}),
 processed by the \textsl{Gaia}
-Data Processing and Analysis Consortium (DPAC,
-\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC
-has been provided by national institutions, in particular the institutions
-participating in the \textsl{Gaia} Multilateral Agreement.
+Data Processing and Analysis Consortium \\
+(DPAC, \url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}).
+% Funding for the DPAC
+% has been provided by national institutions, in particular the institutions
+% participating in the \textsl{Gaia} Multilateral Agreement.
+\\
 Special thanks to the EU Horizon 2020 project ASTERICS for funding
 presentation of this work at ADASS 2018.
+\end{tcolorbox}
+}
+
+\newcommand{\txtDiy}{
+\begin{tcolorbox}[fonttitle=\sffamily\LARGE,
+                  title=\mbox{\rule[-0.5ex]{0ex}{2.5ex}
+                              Do It Yourself!}]
+\raggedright
+Most of the figures on this poster were generated using STILTS
+with data acquired from Gaia VO services.
+A makefile with all the code necessary to obtain the data
+and build the poster are available from
+{\color{blue}\url{https://github.com/mbtaylor/adass2018-tcgaia}}.
 \end{tcolorbox}
 }
 
@@ -371,8 +388,12 @@ error bars/ellipses, and more.  Some examples are shown below.
 \txtCustomFigures
 \end{textblock}
 
-\begin{textblock}{1}(0,0.97)
+\begin{textblock}{0.66}(0,0.96)
 \txtAcknowledgements
+\end{textblock}
+
+\begin{textblock}{0.33}(0.67,0.96)
+\txtDiy
 \end{textblock}
 
 \begin{textblock}{0}(0.5,0.45)
