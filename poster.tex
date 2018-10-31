@@ -1,0 +1,395 @@
+\documentclass[a0,portrait]{a0poster}
+
+\usepackage{textpos}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{tcolorbox}
+\usepackage{fancyvrb}
+\usepackage{sfmath}
+\usepackage{color}
+
+% a0poster sizes
+% \tiny 12pt
+% \scriptsize 14.4pt
+% \footnotesize 17.28pt
+% \small 20.74pt
+% \normalsize 24.88pt
+% \large 29.86pt
+% \Large 35.83pt
+% \LARGE 43pt
+% \huge 51.6pt
+% \Huge 61.92pt
+% \veryHuge 74.3pt
+% \VeryHuge 89.16pt
+% \VERYHuge 107pt
+
+% Fixes problem with includegraphics images screwing up colours on their
+% page in the output PDF.  I have no idea *how* it fixes it mind.
+\pdfpageattr {/Group << /S /Transparency /I true /CS /DeviceRGB>>}
+
+\pagestyle{empty}
+\setcounter{secnumdepth}{0}
+
+\definecolor{black}{rgb}{0.0,0.0,0.0}
+\definecolor{blue}{rgb}{0.1,0.1,0.9}
+\definecolor{brown}{rgb}{0.4,0.2,0.0}
+\definecolor{darkblue}{rgb}{0.1,0.1,0.5}
+\definecolor{darkgreen}{rgb}{0.2,0.7,0.2}
+\definecolor{darkred}{rgb}{0.7,0.2,0.2}
+\definecolor{red}{rgb}{0.9,0.0,0.1}
+\definecolor{lightbrown}{rgb}{0.77,0.66,0.48}
+\definecolor{teal}{rgb}{0.000,0.317,0.611}
+\definecolor{orange}{rgb}{0.80,0.60,0.0}
+\definecolor{darkgrey}{rgb}{0.2,0.2,0.2}
+\definecolor{paleblue}{rgb}{0.92,0.92,1.0}
+\definecolor{paleyellow}{rgb}{1.0,1.0,0.64}
+\definecolor{grey}{rgb}{0.5,0.5,0.5}
+\definecolor{palegrey}{rgb}{0.8,0.8,0.8}
+\definecolor{veryfaint}{rgb}{0.85,0.85,0.85}
+\definecolor{darkpink}{rgb}{0.38,0.03,0.35}
+\definecolor{brightpink}{rgb}{0.64,0.03,0.60}
+
+
+\let\Textsize\large
+\def\RHead#1{\noindent\hbox to \hsize{\hfil{\LARGE\color{darkblue}\textbf{#1}}}\bigskip}
+\def\Head#1{\hspace*{-2.3mm}{\LARGE\color{darkblue}{\textbf{#1}}\vspace*{4mm}}}
+\def\Subhead#1{\vspace{2ex}\noindent{\Large\color{darkblue} #1}}
+\def\Title#1{\noindent{\VERYHuge\color{red} #1}}
+
+\newcommand{\txtgap}{\vspace*{2ex}}
+
+\newcommand{\hl}[1]{{\color{darkred}#1}}
+
+\newcommand{\boldsf}{\bfseries\sffamily}
+
+\newcommand{\txtTitle}{
+   \begin{minipage}[b]{0cm}
+   \begin{tabbing}
+     \includegraphics[height=6.5cm]{tclogo_clip.pdf}
+     \scalebox{1.2}{
+       \raisebox{1.5cm}{
+         {\VERYHuge\textbf{TOPCAT and Gaia}}
+       }
+     }
+     \includegraphics[height=6.5cm]{gaia_noname.png}
+   \end{tabbing}
+   \end{minipage}
+   \hspace*{4cm}
+   \begin{minipage}[b]{0cm}
+   \begin{tabbing}
+     {\veryHuge Mark Taylor} \\
+     \includegraphics[width=12.4cm]{ubristol.pdf}
+   \end{tabbing}
+   \end{minipage}
+   \hspace*{1cm}
+   \begin{minipage}[b]{0cm}
+   \begin{tabbing}
+     \includegraphics[height=6.5cm]{mark-jbo.jpeg}
+   \end{tabbing}
+   \end{minipage}
+}
+
+\newcommand{\txtAbstract}{
+\begin{tcolorbox}[fonttitle=\sffamily\Large,
+                  title=Abstract]
+TOPCAT, and its command line counterpart STILTS, are powerful tools
+for working with large source catalogues.  ESA's {\em Gaia\/} mission,
+most recently with its second data release, is producing source catalogues
+of unprecedented quality for more than a billion sources.  We present
+here some examples of how TOPCAT and STILTS can be used for analysis of
+Gaia data.
+\end{tcolorbox}
+}
+
+\newcommand{\txtAcknowledgements}{
+\begin{tcolorbox}[fonttitle=\sffamily\LARGE,
+                  title=Acknowledgements]
+\raggedright
+This work has been primarily funded by the
+UK's Science and Technology Facilities Council.
+It has made use of data from the European Space Agency (ESA) mission
+\textsl{Gaia} (\url{https://www.cosmos.esa.int/gaia}),
+processed by the \textsl{Gaia}
+Data Processing and Analysis Consortium (DPAC,
+\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC
+has been provided by national institutions, in particular the institutions
+participating in the \textsl{Gaia} Multilateral Agreement.
+Special thanks to the EU Horizon 2020 project ASTERICS for funding
+presentation of this work at ADASS 2018.
+\end{tcolorbox}
+}
+
+\newcommand{\txtVO}{
+\Head{Data Access}
+
+The primary access to the Gaia catalogue is via 
+\hl{Virtual Observatory} protocols,
+provided by the GACS system at ESAC, and other data centers elsewhere.
+TOPCAT provides user-friendly GUI interfaces to the relevant protocols,
+including
+\begin{itemize}
+\item \hl{TAP} (submit SQL-like queries to the database),
+\item \hl{Cone Search} (retrieve all sources round a given sky position)
+\item \hl{DataLink} (request e.g.\ time series for one or more sources)
+\end{itemize}
+
+\begin{picture}(0.5,0.31)
+\put(0.02,0.02){\includegraphics[scale=1.0]{ConeSearchWindow.png}}
+\put(0.12,0.12){\includegraphics[scale=1.0]{ActivationWindow.png}}
+\put(0.25,0){\includegraphics[scale=1.0]{TapLoadDialog.png}}
+\end{picture}
+
+\txtgap
+TOPCAT can also read files in the \hl{GBIN} format used internally
+within the Gaia data processing consortium.
+}
+
+\begin{SaveVerbatim}{uvwcalc}
+  icrsToGal(astromUVW(ra, dec, pmra, pmdec, radial_velocity,
+                      1000./parallax, false))
+\end{SaveVerbatim}
+\newcommand{\func}[1]{{\color{brown}\tt #1}}
+
+\newcommand{\txtJel}{
+\Head{Expression Language}
+
+TOPCAT provides a powerful language for evaluating algebraic
+expressions to define new columns, row selections, and plot
+coordinates.
+As well as standard arithmetic, trigonometric and astronomical
+operations, the function library contains a number of Gaia-friendly
+functions:
+\begin{itemize}
+\item \hl{Astrometry propagation} to earlier/later epoch
+      \\ \hspace{2em}
+      (functions \func{epochProp},
+                 \func{epochPropErr})
+\item \hl{Astrometric to Cartesian} position/velocity conversion
+      \\ \hspace{2em}
+      (functions \func{polarXYZ},
+                 \func{astromXYZ},
+                 \func{astromUVW},
+                 \func{galToIcrs},
+                 \func{eclToIcrs},
+                 \func{rvKmsToMasyr},
+                 ...)
+\item \hl{Bayesian estimation of distance} from parallax
+      (following Bailer-Jones et al.)
+      \\ \hspace{2em}
+      (functions \func{distanceEstimateEdsd},
+                 \func{distanceBoundsEdsd},
+                 \func{distanceQuantilesEdsd})
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=0.50\textwidth]{hyades_uvw.pdf}
+\end{center}
+
+This figure shows nearby stars
+for which DR2 contains radial velocity
+({\color{brown}\tt radial\_velocity IS NOT NULL},
+ {\color{brown}\tt parallax > 10})
+in a region of galactic $U, V, W$ (velocity) space.
+The small dense blob near the center is the Hyades.
+The coordinates were calculated with the expression:
+{\color{brown}\UseVerbatim{uvwcalc}}
+}
+
+
+\newcommand{\txtScalability}{
+\Head{Scalability}
+
+Gaia DR2 contains 1.7\,billion sources, and
+investigating this dataset often requires working with large tables.
+\txtgap
+
+\hl{TOPCAT} provides easy \hl{interactive} analysis,
+including flexible exploratory visualisation,
+of order \hl{$10^6$--$10^7$ rows}, on modest hardware
+with no special data preparation
+(e.g.\ data downloaded from external services, FITS files, even CSV).
+For much larger tables, interactive performance may suffer or
+resources may be exhausted.
+\txtgap
+
+\hl{STILTS} (TOPCAT's \hl{command-line} counterpart) works in streaming
+mode, so can cope with \hl{arbitrarily large} tables,
+scaling as $O(N^1)$ in processing time and $O(N^0)$ in memory for $N$ rows.
+The image below was produced as follows:
+\begin{enumerate}
+\item download 61,000 gzipped CSV files (0.5\,Tb) from ESAC
+      ({\color{brown}\tt wget}, 10 hours)
+\item convert to 61,000 small FITS files
+      (STILTS {\color{brown}\tt tpipe}, 5 days)
+\item convert to single 0.8\,Tb column-oriented FITS file
+      (STILTS {\color{brown}\tt tpipe}, 12 hours)
+\item aggregate into level-9 HEALPix map
+      (STILTS {\color{brown}\tt tskymap}, 45 minutes)
+\item render plot to PDF or PNG
+      (STILTS {\color{brown}\tt plot2sky}, a few seconds)
+      % 30 sec because it's got a lot of pixels, but faster for a smaller PNG
+\end{enumerate}
+In practice, steps 4 and 5 were iterated using TOPCAT visualisation
+interactively on smaller datasets to achieve the best results.
+\txtgap
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{bp_rp.pdf}
+\end{center}
+
+\txtgap
+Computation near the data is usually a better way!
+But STILTS can handle the volume.
+}
+
+
+\newcommand{\txtPlot}{
+\Head{Visualisation}
+
+TOPCAT has many visualisation modes enabling
+\hl{highly configurable} \hl{interactive exploration}
+of \hl{high-dimensional data}, suitable for
+both large and small data sets.
+Special attention is given to providing comprehensible representations
+of very large data sets --- a simple scatter plot is not useful when
+there are many more points than pixels.
+
+\txtgap
+Plots specifically intended for Gaia data include the
+\hl{Sky/XY Correlation} and \hl{Sky Vector} layers:
+
+\begin{center}
+\begin{minipage}{0cm}
+\small
+\begin{tabbing}
+  \begin{minipage}[t]{0.22\TPHorizModule}
+  \begin{center}
+  \includegraphics[scale=1.0]{xycorr_plot.png}
+  \end{center}
+  \raggedright
+  The XY Correlation plot shows proper motion error ellipses derived from
+  the Gaia {\color{brown}\tt pmra\_pmdec\_corr} column;
+  the ellipses give much more information than the simple
+  {\color{brown}\tt pmra\_error}/{\color{brown}\tt pmdec\_error}
+  error boxes.
+  \end{minipage}
+  %
+  \hspace{1em}
+  %
+  \begin{minipage}[t]{0.22\TPHorizModule}
+  \begin{center}
+  \includegraphics[scale=1.0]{skyvector_plot.png}
+  \end{center}
+  \raggedright
+  This Sky Vector plot displays proper motion vectors by shape,
+  and parallax by colour.
+  \end{minipage}
+\end{tabbing}
+\end{minipage}
+\end{center}
+  % \begin{picture}(0.5,0.30)
+  % \put(0.2,0.01){\includegraphics[scale=1.0]{skyvector_plot.png}}
+  % \put(0.02,0){\includegraphics[scale=1.0]{xycorr_plot.png}}
+  % \end{picture}
+
+\vspace*{1ex}
+There are very many non-Gaia-specific visualisation features
+useful for Gaia data, including 1-, 2- and 3-dimensional scatter plots
+and histograms, colour coding by density or aggregated values,
+sky plots, contours, quantiles, line and function plotting,
+error bars/ellipses, and more.  Some examples are shown below.
+}
+
+\newcommand{\txtOtherPictures}{
+\begin{picture}(1,0.2)
+\end{picture}
+}
+
+\newcommand{\txtPublicationFigures}{
+\begin{center}
+{\LARGE\color{darkblue}\textbf{TOPCAT in Gaia DR2 Publications}}
+\end{center}
+\begin{picture}(1,0.2)
+% Lindegren et al., A\&A 616 (2018) A2
+\put(0.0,0.00){\includegraphics[height=0.12\TPVertModule]{plot_astrom_sky.png}}
+
+% Lanzafame et al., A\&A 616 (2018) A16
+\put(0.2,0.03){\includegraphics[height=0.12\TPVertModule]{plot_dwarf.png}}
+
+\put(0.4,0.00){\includegraphics[height=0.12\TPVertModule]{plot_lindegren_hrd.png}}
+\put(0.55,0.03){\includegraphics[height=0.12\TPVertModule]{plot_helmi_corr.png}}
+\put(0.75,0.00){\includegraphics[height=0.12\TPVertModule]{plot_lindegren_parerr.png}}
+\end{picture}
+}
+
+\newcommand{\txtCustomFigures}{
+\begin{picture}(1,0.2)
+\put(0.33,0,00){\includegraphics[height=0.12\TPVertModule]{nobs.pdf}}
+
+\put(0.0,0.00){\includegraphics[height=0.12\TPVertModule]{hrd.pdf}}
+\put(0.22,0.03){\includegraphics[height=0.12\TPVertModule]{m4.pdf}}
+\put(0.59,0.03){\includegraphics[height=0.12\TPVertModule]{uwe_blank.png}}
+\put(0.59,0.03){\includegraphics[height=0.12\TPVertModule]{uwe.pdf}}
+\put(0.79,0.00){\includegraphics[height=0.12\TPVertModule]{lmc.pdf}}
+\end{picture}
+}
+
+\begin{document}
+\raggedright
+\sffamily
+
+\setlength{\TPHorizModule}{790mm}
+\setlength{\TPVertModule}{1100mm}
+\setlength{\unitlength}{\TPHorizModule}
+
+\begin{textblock}{1}(0,-0.01)
+\txtTitle
+\end{textblock}
+
+\begin{textblock}{1}(0,0.06)
+\txtAbstract
+\end{textblock}
+
+\begin{textblock}{0.48}(0,0.11)
+\txtVO
+\end{textblock}
+
+\begin{textblock}{0.48}(0.52,0.11)
+\txtJel
+\end{textblock}
+
+\begin{textblock}{0.48}(0,0.46)
+\txtScalability
+\end{textblock}
+
+\begin{textblock}{0.48}(0.52,0.46)
+\txtPlot
+\end{textblock}
+
+\begin{textblock}{1}(0,0.81)
+% \txtPublicationFigures
+\txtCustomFigures
+\end{textblock}
+
+\begin{textblock}{1}(0,0.97)
+\txtAcknowledgements
+\end{textblock}
+
+\begin{textblock}{0}(0.5,0.45)
+\hspace*{-0.5\TPHorizModule}\rule{\TPHorizModule}{0.2cm}
+\end{textblock}
+
+\begin{textblock}{0}(0.5,0.10)
+\rule{0.2cm}{0.70\TPVertModule}
+\end{textblock}
+
+\begin{textblock}{1}(0,1.035)
+{\color{grey}
+ ADASS XXVIII, College Park, MD, USA, November 2018
+ \hfill
+ \verb|$Id: poster.tex,v 1.22 2018/10/24 21:21:22 mbt Exp $|
+}
+\end{textblock}
+
+\end{document}
+
