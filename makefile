@@ -2,16 +2,20 @@
 # This is the makefile used to build the poster "TOPCAT and Gaia"
 # by Mark Taylor, presented at the ADASS conference 2018.
 #
-# You can use it at home to build the poster (make build).
 # This will download the data required from Gaia VO services,
-# then run STILTS commands to generate the figures.
-# There are 7 generated figures; the others are TOPCAT screenshots
-# or fluff.
+# then run STILTS commands to generate the figures. There are 7
+# generated figures; the others are TOPCAT screenshots or fluff.
 #
-# Note however that some of the downloaded data files are quite large;
+# To build the poster, do 'make build'; this requires some non-standard
+# LaTeX packages so may not complete without some LaTeX tweaking,
+# but it should get as far as the interesting parts, namely downloading
+# the data from Gaia services and building the figures.
+#
+# Note however that some of the downloaded data files are quite large,
 # in total about 400Mb, so you should have reasonable network bandwidth
 # before you attempt it.  It wouldn't be hard to get similar figures
 # with smaller data files by placing some restrictions on the queries.
+# Doing this is left as an exercise for the reader.
 
 ##################################################################
 # Configuration.
@@ -170,6 +174,10 @@ gaia-dr2-stats-hpx9.fits:
 ##################################################################
 # Figure targets
 
+# Plot in Cartesian velocity space (Galactic U,V,W coordinates) of nearby
+# sources.  The Hyades shows up clearly as a small overdense region.
+# This is even clearer if you plot it interactively (just omit the out=$@
+# parameter) and navigate around the resulting on-screen plot using the mouse.
 hyades_uvw.pdf: 100pc-rv.fits
 	$(STILTS) plot2cube \
                   in=100pc-rv.fits \
@@ -186,6 +194,9 @@ hyades_uvw.pdf: 100pc-rv.fits
                   z1='gal_uvw[2]' zlabel='W / km/s' \
                   out=$@
 
+# All-sky plot of median BP-RP colour by position for the 1.4 billion
+# Gaia sources with BP and RP measurements.  The hard work has been done
+# by creating the input HEALPix map, by an earlier invocation of tskymap.
 bp_rp.pdf: gaia-dr2-stats-hpx9.fits
 	$(STILTS) plot2sky \
                   projection=aitoff datasys1=equatorial \
@@ -201,6 +212,13 @@ bp_rp.pdf: gaia-dr2-stats-hpx9.fits
                   auxlabel='median\  (BP-RP) / mag' \
                   out=$@
 
+# Herzsprung-Russell diagram for all nearby sources with a first
+# approximation at reliable parallaxes and photometry.
+# The points are coloured by the quantity astrometric_excess_noise,
+# which characterises goodness of fit of the astrometric solution.
+# Regions of the diagram with a colour corresponding to high (>1)
+# excess noise represent suspect astrometry, so these objects
+# should probably be excluded from the HRD.
 hrd.pdf: 100pc-phot.fits
 	$(STILTS) plot2plane \
                   in=100pc-phot.fits \
@@ -212,6 +230,9 @@ hrd.pdf: 100pc-phot.fits
                   yflip=true \
                   out=$@
 
+# Sources in the region of the globular cluster Messier 4, plotted
+# in proper motion space.  Two populations, corresponding to cluster
+# members and backgroud objects, are clearly visible.
 m4.pdf: m4.vot
 	$(STILTS) plot2plane \
                   grid=true \
@@ -229,6 +250,9 @@ m4.pdf: m4.vot
                   legpos=0.9,0.1 \
                   out=$@
 
+# All-sky plot of number of observations per object for all 1.7 billion
+# Gaia sources, plotted in galactic coordinates.
+# The swirls reveal the Gaia scanning law.
 nobs.pdf: gaia-dr2-stats-hpx9.fits
 	$(STILTS) $(STILTS_MEM_FLAGS) \
                   plot2sky \
@@ -245,6 +269,10 @@ nobs.pdf: gaia-dr2-stats-hpx9.fits
                   layer2=skygrid gridsys2=ecliptic gridcolor2=black \
                   out=$@
 
+# Plot of the Unit Weight Error vs. magnitude for nearby sources,
+# following Fig C.2 of Lindegren et al. (A&A 616, A2 (2018)).
+# Contours, the median and quartiles, and an analytic function
+# are overplotted.
 uwe.pdf: 100pc-phot.fits
 	$(STILTS) plot2plane \
                   ylog=true texttype=latex fontsize=24 \
@@ -272,6 +300,9 @@ uwe.pdf: 100pc-phot.fits
                   xpix=680 ypix=600 \
                   out=$@
 
+# Plot of spatial parallax variations in the region of the LMC, showing
+# that uncorrected systematic errors are present in DR2 parallaxes.
+# Follows Fig 13 of Lindegren et al. (A&A 616, A2 (2018)).
 lmc.pdf: lmc-16m.fits
 	$(STILTS) $(STILTS_MEM_FLAGS) \
                   plot2sky sex=false \
