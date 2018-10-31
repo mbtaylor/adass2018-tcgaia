@@ -198,7 +198,7 @@ bp_rp.pdf: gaia-dr2-stats-hpx9.fits
                   degrade1=0 datalevel1=9 combine1=mean \
                   auxmap=pastel auxclip=0,1 auxfunc=linear \
                   auxmin=0.96 auxmax=3.1 \
-                  auxlabel='median BP-RP / mag' \
+                  auxlabel='median\  (BP-RP) / mag' \
                   out=$@
 
 hrd.pdf: 100pc-phot.fits
