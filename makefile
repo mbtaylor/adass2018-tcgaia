@@ -17,18 +17,16 @@
 # Configuration.
 
 POSTER = poster
+STILTS_JAR = stilts.jar
+JAVA = java
+PDFLATEX = pdflatex
 
-# The stilts command required to generate the data.
-# This tutorial was developed with STILTS v3.1-4; later versions should
+# The stilts command required to generate the data and figures.
+# This poster was developed with STILTS v3.1-5; later versions should
 # probably work, but if you suspect there's a version issue, you could
 # try getting a the relevant version from the old version archive at
 # ftp://andromeda.star.bris.ac.uk/pub/star/stilts/ or maybe github.
-# If you don't have a stilts script on the path, you can replace this with
-# STILTS = ./stilts.
-STILTS = stilts
-
-# You will have to adjust this.
-PDFLATEX = /mbt/local/texlive/2015/bin/x86_64-linux/pdflatex
+STILTS = $(JAVA) -Xmx2G -jar $(STILTS_JAR)
 
 BUILT_FIGURES = hyades_uvw.pdf \
                 bp_rp.pdf \
@@ -49,14 +47,14 @@ BUILT_DATA = 100pc-rv.fits \
 
 build: $(POSTER).pdf
 
-data: $(BUILT_DATA)
+data: $(STILTS_JAR) $(BUILT_DATA)
 
-figures: $(BUILT_FIGURES)
+figures: $(STILTS_JAR) $(BUILT_FIGURES)
 
 view: $(POSTER).view
 
 clean:
-	rm -f $(POSTER).{aux,log,pdf} a0header.ps
+	rm -f $(POSTER).{aux,log,pdf} a0header.ps sha1.tex
 
 cleanfigures:
 	rm -f $(BUILT_FIGURES)
@@ -64,7 +62,10 @@ cleanfigures:
 cleandata:
 	rm -f $(BUILT_DATA)
 
-veryclean: clean cleanfigures cleandata
+cleanstilts:
+	rm -f stilts.jar
+
+veryclean: clean cleanfigures cleandata cleanstilts
 
 
 ##################################################################
@@ -72,14 +73,14 @@ veryclean: clean cleanfigures cleandata
 
 .SUFFIXES: .tex .pdf .view
 
-$(POSTER).pdf: $(POSTER).tex $(BUILT_FIGURES)
+$(POSTER).pdf: $(POSTER).tex $(STILTS_JAR) $(BUILT_FIGURES)
 	git show -s --pretty=format:%h >sha1.tex
 	$(PDFLATEX) $< \
      || rm $@
 
-./stilts: stilts.jar
-	unzip stilts.jar stilts
-	chmod +x $@
+# Required version 3.1-4+ currently only available in pre-release.
+stilts.jar:
+	curl ftp://andromeda.star.bris.ac.uk/pub/star/stilts/pre/stilts.jar >$@
 
 uwe_blank.png:
 	convert -size 680x600 canvas:white $@
@@ -229,7 +230,8 @@ m4.pdf: m4.vot
                   out=$@
 
 nobs.pdf: gaia-dr2-stats-hpx9.fits
-	$(STILTS) plot2sky \
+	$(STILTS) $(STILTS_MEM_FLAGS) \
+                  plot2sky \
                   projection=aitoff datasys1=equatorial \
                   grid=false labelpos=none \
                   viewsys=galactic \
@@ -271,7 +273,8 @@ uwe.pdf: 100pc-phot.fits
                   out=$@
 
 lmc.pdf: lmc-16m.fits
-	$(STILTS) plot2sky sex=false \
+	$(STILTS) $(STILTS_MEM_FLAGS) \
+                  plot2sky sex=false \
                   auxmap=hotcold auxmin=-0.1 auxmax=+0.1 \
                   auxvisible=true auxlabel='median parallax / mas' \
                   in1=lmc-16m.fits \
