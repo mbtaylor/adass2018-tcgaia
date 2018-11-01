@@ -182,10 +182,11 @@ hyades_uvw.pdf: 100pc-rv.fits
 	$(STILTS) plot2cube \
                   in=100pc-rv.fits \
                   icmd='addcol -shape 3 gal_uvw icrsToGal(astromUVW(ra,dec,pmra,pmdec,radial_velocity,1000./parallax,false))' \
-                  xpix=500 ypix=450 insets=-60,0,-40,0 \
+                  xpix=500 ypix=470 insets=-50,0,-10,0 \
                   xcrowd=0.6 ycrowd=0.6 zcrowd=0.6 \
                   xmin=-70 xmax=-3 ymin=-33.5 ymax=33.5 zmin=-38.1 zmax=28.9 \
                   phi=163.63 theta=21.5 psi=164.78 \
+                  fontsize=20 \
                   layer1=mark size1=3 \
                   shading1=density \
                   densemap1=cubehelix densefunc1=sqrt denseclip=0.063,1 \
@@ -228,6 +229,7 @@ hrd.pdf: 100pc-phot.fits
                   auxmap=gnuplot2 auxflip=true auxfunc=log \
                   auxclip=0,1 auxquant=9 \
                   yflip=true \
+                  minor=false \
                   out=$@
 
 # Sources in the region of the globular cluster Messier 4, plotted
@@ -246,7 +248,7 @@ m4.pdf: m4.vot
                   icmd2='select isInside(pmra,pmdec,-12.3,-11.9,-7.1,-14.1,-5.3,-18.0,-5.8,-22.6,-9.3,-25.8,-16.6,-25.3,-20.7,-22.2,-21.3,-18.1,-18.8,-13.5,-15.1,-11.8)' \
                   xpix=700 ypix=700 \
                   leglabel1=background leglabel2=cluster \
-                  xlabel='\mu_\alpha*' ylabel='\mu_\delta' \
+                  xlabel='{\LARGE\mu_\alpha*}' ylabel='{\LARGE\mu_\delta}' \
                   legpos=0.9,0.1 \
                   out=$@
 

@@ -130,7 +130,8 @@ presentation of this work at ADASS 2018.
 \raggedright
 Most of the figures on this poster were generated using STILTS
 with data acquired from Gaia VO services.
-A makefile with all the code necessary to obtain the data
+A makefile and source files containing everything
+necessary to obtain the data
 and build the poster are available from
 {\color{blue}\url{https://github.com/mbtaylor/adass2018-tcgaia}}.
 \end{tcolorbox}
@@ -162,8 +163,7 @@ within the Gaia data processing consortium.
 }
 
 \begin{SaveVerbatim}{uvwcalc}
-  icrsToGal(astromUVW(ra, dec, pmra, pmdec, radial_velocity,
-                      1000./parallax, false))
+icrsToGal(astromUVW(ra, dec, pmra, pmdec, radial_velocity, 1000./parallax, false))
 \end{SaveVerbatim}
 \newcommand{\func}[1]{{\color{brown}\tt #1}}
 
@@ -176,6 +176,7 @@ coordinates.
 As well as standard arithmetic, trigonometric and astronomical
 operations, the function library contains a number of Gaia-friendly
 functions:
+
 \begin{itemize}
 \item \hl{Astrometry propagation} to earlier/later epoch
       \\ \hspace{2em}
@@ -199,7 +200,7 @@ functions:
 \end{itemize}
 
 \begin{center}
-\includegraphics[width=0.50\textwidth]{hyades_uvw.pdf}
+\includegraphics[width=0.5\textwidth]{hyades_uvw.pdf}
 \end{center}
 
 This figure shows nearby stars
@@ -222,21 +223,22 @@ investigating this dataset often requires working with large tables.
 
 \hl{TOPCAT} provides easy \hl{interactive} analysis,
 including flexible exploratory visualisation,
-of order \hl{$10^6$--$10^7$ rows}, on modest hardware
+for order \hl{$10^6$--$10^7$ rows}, on modest hardware
 with no special data preparation
 (e.g.\ data downloaded from external services, FITS files, even CSV).
-For much larger tables, interactive performance may suffer or
-resources may be exhausted.
+For much larger tables, interactive performance will degrade and
+memory may be exhausted.
 \txtgap
 
 \hl{STILTS} (TOPCAT's \hl{command-line} counterpart) works in streaming
 mode, so can cope with \hl{arbitrarily large} tables,
-scaling as $O(N^1)$ in processing time and $O(N^0)$ in memory for $N$ rows.
+most tasks scaling as $O(N^1)$ in processing time and $O(N^0)$
+in memory for $N$ rows.
 The image below was produced as follows:
 \begin{enumerate}
-\item download 61,000 gzipped CSV files (0.5\,Tb) from ESAC
+\item download 61\,000 gzipped CSV files (0.5\,Tb) from ESAC
       ({\color{brown}\tt wget}, 10 hours)
-\item convert to 61,000 small FITS files
+\item convert to 61\,000 small FITS files
       (STILTS {\color{brown}\tt tpipe}, 5 days)
 \item convert to single 0.8\,Tb column-oriented FITS file
       (STILTS {\color{brown}\tt tpipe}, 12 hours)
@@ -383,7 +385,7 @@ error bars/ellipses, and more.  Some examples are shown below.
 \txtPlot
 \end{textblock}
 
-\begin{textblock}{1}(0,0.81)
+\begin{textblock}{1}(0,0.805)
 % \txtPublicationFigures
 \txtCustomFigures
 \end{textblock}
@@ -400,7 +402,7 @@ error bars/ellipses, and more.  Some examples are shown below.
 \hspace*{-0.5\TPHorizModule}\rule{\TPHorizModule}{0.2cm}
 \end{textblock}
 
-\begin{textblock}{0}(0.5,0.10)
+\begin{textblock}{0}(0.5,0.105)
 \rule{0.2cm}{0.70\TPVertModule}
 \end{textblock}
 
