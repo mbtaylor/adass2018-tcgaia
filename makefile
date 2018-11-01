@@ -78,7 +78,7 @@ veryclean: clean cleanfigures cleandata cleanstilts
 .SUFFIXES: .tex .pdf .view
 
 $(POSTER).pdf: $(POSTER).tex $(STILTS_JAR) $(BUILT_FIGURES)
-	git show -s --pretty=format:%h >sha1.tex
+	git show -s --format='%cd %h' --date=short >sha1.tex
 	$(PDFLATEX) $< \
      || rm $@
 
