@@ -29,7 +29,7 @@ PDFLATEX = pdflatex
 # This poster was developed with STILTS v3.1-5; later versions should
 # probably work, but if you suspect there's a version issue, you could
 # try getting a the relevant version from the old version archive at
-# ftp://andromeda.star.bris.ac.uk/pub/star/stilts/ or maybe github.
+# ftp://andromeda.star.bris.ac.uk/pub/star/stilts/v3.1-5/ or maybe github.
 STILTS = $(JAVA) -Xmx2G -jar $(STILTS_JAR)
 
 BUILT_FIGURES = hyades_uvw.pdf \
@@ -82,9 +82,11 @@ $(POSTER).pdf: $(POSTER).tex $(STILTS_JAR) $(BUILT_FIGURES)
 	$(PDFLATEX) $< \
      || rm $@
 
-# Required version 3.1-4+ currently only available in pre-release.
+# Required version is 3.1-5 (or probably later versions).
+# If this version doesn't work and you suspect version issues, try instead
+# ftp://andromeda.star.bris.ac.uk/pub/star/stilts/v3.1-5/stilts.jar
 stilts.jar:
-	curl ftp://andromeda.star.bris.ac.uk/pub/star/stilts/pre/stilts.jar >$@
+	curl -L http://www.starlink.ac.uk/stilts/stilts.jar >$@
 
 uwe_blank.png:
 	convert -size 680x600 canvas:white $@
