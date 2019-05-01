@@ -166,6 +166,15 @@ lmc-16m.fits:
 #                    count=true cols=bp_rp \
 #                    out=gaia-dr2-stats-hpx9.fits
 # The download is however a very expensive operation, so not reproduced here.
+#    [ Note: if you want to try this at home, the huge FITS file           ]
+#    [ gaia_source.colfits is at time of writing available in:             ]
+#    [    http://andromeda.star.bris.ac.uk/gaia-dr2/gaia_source/           ]
+#    [ If you want to try the 800Gb download you can, but it will probably ]
+#    [ take a day or more, and I reserve the right to kill the download    ]
+#    [ if it overburdens the web server (my desktop machine).  It might be ]
+#    [ a good idea to talk to me first (m.b.taylor@bristol.ac.uk)          ]
+#    [ if you're planning to attempt this download.                        ]
+#
 # Instead, we copy a version prepared earlier.
 # This HEALPix file is still quite big: 75Mb.
 gaia-dr2-stats-hpx9.fits:
